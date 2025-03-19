@@ -1,8 +1,9 @@
 import pygame
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, ground):
         super().__init__()
+        self.GROUND = ground
 
         self.jump = pygame.image.load('graphics/Player/jump.png').convert_alpha()
         self.frames = [
@@ -11,21 +12,24 @@ class Player(pygame.sprite.Sprite):
         ]
         self.walk_index = 0
         self.image = self.frames[self.walk_index]
-        self.rect = self.image.get_rect(midbottom=(80, 300))
+        self.rect = self.image.get_rect(midbottom=(80, self.GROUND))
         self.gravity = 0
 
     def update(self):
-        #First, handle input
+        # first, let's handle input
         keys = pygame.key.get_pressed()
+        # {
+        #   K_SPACE: True,
+        #   K_TAB: False,
+        # }
         if keys[pygame.K_SPACE] and self.rect.bottom >= self.GROUND:
-            player_gravity = -20
-        #Second, manipulate gravity
-        #Third, do our animation changes
+            self.gravity = -20
+        # second, let's manipulate gravity
+        # third, do our animation changes
         self.gravity += 1
-        self.rect.y += player_gravity
+        self.rect.y += self.gravity
         if self.rect.bottom >= self.GROUND:
             self.rect.bottom = self.GROUND
-        pass
 
         # Player animation
         if self.rect.bottom < self.GROUND:
@@ -35,4 +39,3 @@ class Player(pygame.sprite.Sprite):
             if self.walk_index >= len(self.frames):
                 self.walk_index = 0
             self.image = self.frames[int(self.walk_index)]
-
