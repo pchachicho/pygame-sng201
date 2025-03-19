@@ -1,3 +1,4 @@
+import pygame
 
 class Player(pygame.sprite.Sprite):
     def __init__(self):
@@ -16,18 +17,18 @@ class Player(pygame.sprite.Sprite):
     def update(self):
         #First, handle input
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_SPACE] and self.rect.bottom >= GROUND:
+        if keys[pygame.K_SPACE] and self.rect.bottom >= self.GROUND:
             player_gravity = -20
         #Second, manipulate gravity
         #Third, do our animation changes
         self.gravity += 1
         self.rect.y += player_gravity
-        if self.rect.bottom >= GROUND:
-            self.rect.bottom = GROUND
+        if self.rect.bottom >= self.GROUND:
+            self.rect.bottom = self.GROUND
         pass
 
         # Player animation
-        if self.rect.bottom < GROUND:
+        if self.rect.bottom < self.GROUND:
             self.image = self.jump
         else:
             self.walk_index += 0.1
