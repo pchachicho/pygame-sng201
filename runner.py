@@ -4,7 +4,7 @@ import pygame
 import sys
 import time
 import splash
-from enemies import Fly, Snail, Beetle
+from enemies import Obstacle
 from player import Player
 pygame.init()
 
@@ -25,6 +25,9 @@ def main():
     clock = pygame.time.Clock()
     test_font = pygame.font.Font('font/Pixeltype.ttf', 50)
     game_active = False
+    music = pygame.mixer.Sound('audio/music.wav')
+    music.set_volume(0.25)
+    music.play(loops=-1)
 
     # test_surface = pygame.Surface((100, 200))
     # test_surface.fill('blue')
@@ -62,11 +65,11 @@ def main():
             #Draw a random enemy
             x = random.randint(1,300)
             if x == 1:
-                enemies.add(Fly())
+                enemies.add(Obstacle('fly'))
             elif x == 2:
-                enemies.add(Snail())
+                enemies.add(Obstacle('snail'))
             elif x == 3:
-                enemies.add(Beetle())
+                enemies.add(Obstacle('beetle'))
             enemies.update()
             enemies.draw(screen)
 

@@ -14,6 +14,7 @@ class Player(pygame.sprite.Sprite):
         self.image = self.frames[self.walk_index]
         self.rect = self.image.get_rect(midbottom=(80, self.GROUND))
         self.gravity = 0
+        self.jump_sound = pygame.mixer.Sound('audio/jump.mp3')
 
     def update(self):
         # first, let's handle input
@@ -24,6 +25,7 @@ class Player(pygame.sprite.Sprite):
         # }
         if keys[pygame.K_SPACE] and self.rect.bottom >= self.GROUND:
             self.gravity = -20
+            self.jump_sound.play()
         # second, let's manipulate gravity
         # third, do our animation changes
         self.gravity += 1

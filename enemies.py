@@ -12,19 +12,28 @@ SNAIL_FRAMES = [
     pygame.image.load('graphics/snail/snail2.png')
 ]
 BEETLE_FRAMES = [
-    pygame.image.load('graphics/beetle1.png'),
-    pygame.image.load('graphics/beetle2.png')
+    pygame.image.load('graphics/Beetle/beetle1.png'),
+    pygame.image.load('graphics/Beetle/beetle2.png')
 ]
 
-
-class Fly(pygame.sprite.Sprite):
-    def __init__(self):
+class Obstacle(pygame.sprite.Sprite):
+    def __init__(self, kind: str):
         super().__init__()
+        self.kind = kind
 
-        self.frames = FLY_FRAMES
+        if kind == 'fly':
+            self.frames = FLY_FRAMES
+            y = 210
+        elif kind == 'snail':
+            self.frames = SNAIL_FRAMES
+            y = 300
+        else:
+            self.frames = BEETLE_FRAMES
+            y = 300
+
         self.frame_index = 0
         self.image = self.frames[self.frame_index]
-        self.rect = self.image.get_rect(midbottom=(random.randint(900, 1100), 210))
+        self.rect = self.image.get_rect(midbottom=(random.randint(900, 1100), y))
 
     def update(self):
         self.frame_index += 0.1
@@ -33,47 +42,6 @@ class Fly(pygame.sprite.Sprite):
 
         self.image = self.frames[int(self.frame_index)]
 
-        self.rect.x -= 7
-        if self.rect.right < 0:
-            self.kill()
-
-
-class Snail(pygame.sprite.Sprite):
-    def __init__(self):
-        super().__init__()
-
-        self.frames = SNAIL_FRAMES
-        self.frame_index = 0
-        self.image = self.frames[self.frame_index]
-        self.rect = self.image.get_rect(midbottom=(random.randint(900, 1100), 300))
-
-    def update(self):
-        self.frame_index += 0.1
-        if self.frame_index >= len(self.frames):
-            self.frame_index = 0
-
-        self.image = self.frames[int(self.frame_index)]
-
-        self.rect.x -= 5
-        if self.rect.right < 0:
-            self.kill()
-
-class Beetle(pygame.sprite.Sprite):
-    def __init__(self):
-        super().__init__()
-
-        self.frames = BEETLE_FRAMES
-        self.frame_index = 0
-        self.image = self.frames[self.frame_index]
-        self.rect = self.image.get_rect(midbottom=(random.randint(900, 1100), 210))
-
-    def update(self):
-        self.frame_index += 0.1
-        if self.frame_index >= len(self.frames):
-            self.frame_index = 0
-
-        self.image = self.frames[int(self.frame_index)]
-
-        self.rect.x -= 7
+        self.rect.x -= 8 if self.kind == 'fly' else 5
         if self.rect.right < 0:
             self.kill()
