@@ -4,7 +4,7 @@ import pygame
 import sys
 import time
 import splash
-from enemies import Fly, Snail
+from enemies import Fly, Snail, Beetle
 from player import Player
 pygame.init()
 
@@ -65,6 +65,8 @@ def main():
                 enemies.add(Fly())
             elif x == 2:
                 enemies.add(Snail())
+            elif x == 3:
+                enemies.add(Beetle())
             enemies.update()
             enemies.draw(screen)
 
